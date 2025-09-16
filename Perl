@@ -1,0 +1,47 @@
+#!/usr/bin/perl
+use strict;
+use warnings;
+use Data::Dumper;
+
+my $data_file = 'pune_data.txt';
+open my $fh, '<', $data_file or die "Cannot open '$data_file': $!";
+
+my %pune_data;
+
+# Read and parse the data file
+while (my $line = <$fh>) {
+    chomp $line;
+    next if $line =~ /^#/;
+    my ($type, $name, $description) = split /\|/, $line;
+    push @{$pune_data{$type}}, {
+        name => $name,
+        description => $description
+    };
+}
+close $fh;
+
+# Generate a report for a specific category
+sub generate_report_by_type {
+    my $type = shift;
+    print "--- Report on $type in Pune ---\n";
+    if (exists $pune_data{$type}) {
+        foreach my $item (@{$pune_data{$type}}) {
+            print "  - Name: $item->{name}\n";
+            print "    Description: $item->{description}\n";
+        }
+    } else {
+        print "No data found for type '$type'.\n";
+    }
+    print "\n";
+}
+
+# Main script logic
+generate_report_by_type("Historical Fort");
+generate_report_by_type("Religious Site");
+
+__END__
+# Data for pune_data.txt
+# Type|Name|Description
+Historical Fort|Shaniwar Wada|An 18th-century fort and the seat of the Peshwas of the Maratha Empire.
+Historical Place|Aga Khan Palace|A palace where Mahatma Gandhi and his wife were imprisoned.
+Religious Site|Dagadusheth Halwai Ganapati Temple|A popular temple dedicated to the deity Ganesha.
