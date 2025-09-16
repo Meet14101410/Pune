@@ -1,0 +1,42 @@
+class PuneInfoSystem:
+    """A basic information system for Pune city."""
+    
+    def __init__(self):
+        self.city_facts = {
+            "Location": "Maharashtra, India",
+            "Population": "Approx. 7.5 million (2024)",
+            "Known For": "IT and automobile industries, educational institutions, and cultural heritage"
+        }
+        self.points_of_interest = [
+            {"name": "Shaniwar Wada", "type": "Historical Fort", "description": "An 18th-century fort and the seat of the Peshwas of the Maratha Empire."},
+            {"name": "Aga Khan Palace", "type": "Historical Place", "description": "A palace where Mahatma Gandhi and his wife were imprisoned."},
+            {"name": "Dagadusheth Halwai Ganapati Temple", "type": "Religious Site", "description": "A popular temple dedicated to the deity Ganesha."}
+        ]
+
+    def get_city_fact(self, fact_name):
+        """Retrieves and prints a specific city fact."""
+        if fact_name in self.city_facts:
+            print(f"{fact_name}: {self.city_facts[fact_name]}")
+        else:
+            print(f"Fact not found: {fact_name}")
+
+    def search_points_of_interest(self, search_term):
+        """Searches for points of interest by name or type."""
+        print(f"\n--- Search Results for '{search_term}' ---")
+        found = False
+        for poi in self.points_of_interest:
+            if search_term.lower() in poi["name"].lower() or search_term.lower() in poi["type"].lower():
+                print(f"Name: {poi['name']}")
+                print(f"Type: {poi['type']}")
+                print(f"Description: {poi['description']}")
+                print("-" * 40)
+                found = True
+        if not found:
+            print("No matching points of interest found.")
+
+# Main script logic
+info_system = PuneInfoSystem()
+info_system.get_city_fact("Population")
+info_system.get_city_fact("Known For")
+info_system.search_points_of_interest("Fort")
+info_system.search_points_of_interest("Temple")
